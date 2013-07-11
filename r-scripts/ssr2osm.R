@@ -61,9 +61,11 @@ lagosm=function(d) {
   # Legg til data som er felles for alle namnevariantane
   res=data.frame(no_kartverket_ssr.objid=d$enh_ssrobj_id[1],
                 no_kartverket_ssr.date=d$skr_sndato[1],
-                no_kartverket_ssr.url=paste0("http://faktaark.statkart.no/SSRFakta/faktaarkfraobjektid?enhet=", d$enh_ssr_id[1]))
+                no_kartverket_ssr.url=paste0("http://faktaark.statkart.no/SSRFakta/faktaarkfraobjektid?enhet=", d$enh_ssr_id[1]),
+                longitude=d$coordinates1[1],
+                latitude=d$coordinates2[1])
   # Legg til «name» og «alt_name» for kvart språk
-  ddply(d, .(enh_snspraak), function(d) {
+  d_ply(d, .(enh_snspraak), function(d) {
     namn=unique(d$enh_snavn) # Berre unike namn (av og til er same namn med fleire gongar, eks. enh_ssrobj_id 77153)
     res[paste0(c("name.", "alt_name."), d$enh_snspraak[1])] <<- namn[1:2]
   })
@@ -81,10 +83,32 @@ res=ddply(komm, .(enh_ssrobj_id), lagosm, .progress="text")
 names(res)=gsub("\\.SN", ".se", names(res))  # Nordsamisk
 names(res)=gsub("\\.SL", ".smj", names(res)) # Lulesamisk
 names(res)=gsub("\\.SS", ".sma", names(res)) # Sørsamisk
-names(res)=gsub("\\.NO", "", names(res))     # Norsk (treng ikkje prefiks)
 names(res)=tolower(names(res))               # Språkkodar om til små bokstavar
 
 # Sjå på nokre av namna
 head(res)
 
+
+# Ikkje alle plassar har norske namn. Bruk det norske
+# namnet som «name»/«alt_name» dersom det finst,
+# ev. eitt av dei andre namna. (Ja, litt uelegant kode,
+# men fungerer kjapt og greitt.)
+
+# Namn på name- og alt_name-kolonnar
+namevar=unique(c("name.no", grep("name\\.", names(res), value=TRUE)))
+altnamevar=unique(c("alt_name.no", grep("alt_name\\.", names(res), value=TRUE)))
+
+# Indeks til (første) kolonne som har namn (der norsk har førsteprioritet)
+name.ind=apply(res[,namevar], 1, function(x) which.min(is.na(x)))       
+altname.ind=apply(res[,altnamevar], 1, function(x) which.min(is.na(x)))
+
+# Legg til name- og alt_name-kolonnar
+res$name=res[,namevar][cbind(1:nrow(res),name.ind)]
+res$alt_name=res[,altnamevar][cbind(1:nrow(res),altname.ind)]
+
+
+# Fjern kolonnar me ikkje (lenger) treng
+res=res[,!(names(res) %in% c("enh_ssrobj_id", "name.no", "alt_name.no"))]
+
 # Gjenstår: Lagra i passande format (hugs å fiksa «_» og «.» til «-» og «:» i variabelnamn) ...
+write.csv(res, file="~/test.csv", row.names=FALSE, na="")
