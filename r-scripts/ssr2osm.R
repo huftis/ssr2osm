@@ -4,8 +4,9 @@
 # Laga av Karl Ove Hufthammer <karl@huftis.org>.
 
 # Nødvendige pakkar
-library(rjson) # Lesing av JSON-data
-library(plyr)  # Enkel datamassering
+library(rjson)   # Lesing av JSON-data
+library(plyr)    # Enkel datamassering
+library(stringr) # Avansert strenghandtering
 
 # Ikkje gjer om tekst til faktorar automatisk
 options(stringsAsFactors=FALSE)
@@ -47,8 +48,48 @@ d3=subset(d3, enh_navntype!=140 )
 # (stolar på Kartverket, sjølv om nokre datoar er langt inni framtida …)
 d3$skr_sndato=as.Date(as.character(d3$skr_sndato), format="%Y%m%d")
 
+
+# Hent inn info om objekttypar
+objtypar=read.csv("../data/objekttypar.csv", sep=",", na.strings="")[c("enh_navntype","osm")]
+head(objtypar)
+
+# Legg objekttypeinfo til SSR-dataa
+d3=merge(d3, objtypar)
+
+# Sjå vidare berre på objekt som har OSM-taggar definert
+d3=subset(d3, !is.na(osm))
+
+# Del opp samansette taggar, og fjern mellomrom før/etter tekstbitane
+taggar=strsplit(d3$osm, ";", fixed=TRUE)
+taggar=sapply(taggar, str_trim)
+
+# Del opp taggar i tagg + verdi
+tagg.verdi=lapply(taggar, strsplit, split="=")
+
+# Oversikt over taggnamn brukte
+taggnamn=unique(gsub("([^=*])=.*", "\\1", d3$osm))
+taggnamn
+
+# Gjer om til liste over namngjevne verdiar (namnet == taggen),
+# eitt element for kvar rad
+hent.verdiar=function(rad) {
+  namn=sapply(rad, function(x) x[1])
+  verdiar=sapply(rad, function(x) x[2])
+  names(verdiar)=namn
+  verdiar
+}
+tagginfo.l=lapply(tagg.verdi, hent.verdiar)
+
+# Lag dataramme med éi kolonne for kvar tagg
+tagginfo.df=sapply(taggnamn, function(objtype) sapply(tagginfo.l, "[", objtype))
+
+# Legg taggkolonnar til den opphavlege dataramma
+d3=data.frame(d3, tagginfo.df)
+
+
 # Sorter etter ID, dato (nyaste vedtak først) og språk
 # (seinare programkode antar sorterte data)
+# (må komma etter merge-kommandoen)
 d3=arrange(d3, enh_ssrobj_id, desc(skr_sndato), enh_snspraak, enh_ssr_id)
 
 # Sjå kjapt på dataa igjen
@@ -63,7 +104,8 @@ lagosm=function(d) {
                 no_kartverket_ssr.date=d$skr_sndato[1],
                 no_kartverket_ssr.url=paste0("http://faktaark.statkart.no/SSRFakta/faktaarkfraobjektid?enhet=", d$enh_ssr_id[1]),
                 longitude=d$coordinates1[1],
-                latitude=d$coordinates2[1])
+                latitude=d$coordinates2[1],
+                d[1, taggnamn])
   # Legg til «name» og «alt_name» for kvart språk
   d_ply(d, .(enh_snspraak), function(d) {
     namn=unique(d$enh_snavn) # Berre unike namn (av og til er same namn med fleire gongar, eks. enh_ssrobj_id 77153)
@@ -99,16 +141,22 @@ namevar=unique(c("name.no", grep("name\\.", names(res), value=TRUE)))
 altnamevar=unique(c("alt_name.no", grep("alt_name\\.", names(res), value=TRUE)))
 
 # Indeks til (første) kolonne som har namn (der norsk har førsteprioritet)
-name.ind=apply(res[,namevar], 1, function(x) which.min(is.na(x)))       
-altname.ind=apply(res[,altnamevar], 1, function(x) which.min(is.na(x)))
+name.ind=apply(res[,namevar, drop=FALSE], 1, function(x) which.min(is.na(x)))       
+altname.ind=apply(res[,altnamevar, drop=FALSE], 1, function(x) which.min(is.na(x)))
 
 # Legg til name- og alt_name-kolonnar
-res$name=res[,namevar][cbind(1:nrow(res),name.ind)]
-res$alt_name=res[,altnamevar][cbind(1:nrow(res),altname.ind)]
+res$name=res[,namevar, drop=FALSE][cbind(1:nrow(res),name.ind)]
+res$alt_name=res[,altnamevar, drop=FALSE][cbind(1:nrow(res),altname.ind)]
 
 
 # Fjern kolonnar me ikkje (lenger) treng
-res=res[,!(names(res) %in% c("enh_ssrobj_id", "name.no", "alt_name.no"))]
+res=res[,!(names(res) %in% c("enh_ssrobj_id", "osm", "name.no", "alt_name.no"))]
 
-# Gjenstår: Lagra i passande format (hugs å fiksa «_» og «.» til «-» og «:» i variabelnamn) ...
-write.csv(res, file="~/test.csv", row.names=FALSE, na="")
+
+# Lag klar rette kolonnenamn
+kolnamn=gsub("no_kartverket_ssr", "no-kartverket-ssr", names(res))
+kolnamn=gsub("\\.", ":", kolnamn)
+
+# Lagra i CSV-format, for enkel bruk i JOSM og andre program
+write.table(res, file="~/test.csv", col.names=kolnamn,
+            sep=",", dec=".", na="", row.names=FALSE)
