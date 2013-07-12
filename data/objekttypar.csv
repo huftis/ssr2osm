@@ -96,62 +96,62 @@
 5,112,3963,"Bygg for jordbruk, fiske og fangst","Bu, naust, uthus, fjøs, gamme",
 5,113,367,"Fabrikk","Større industrivirksomhet","industrial=factory"
 5,114,174,"Kraftstasjon","Alle typer / alle størrelser til energiproduksjon (f.eks. el. og varme)","power=plant; landuse=industrial"
-5,115,271,"Annen industri- og  lagerbygning","Mindre industri-, produksjon- og lagervirksomhet",
-5,116,198,"Forretningsbygg","Hus for kontor- og servicevirksomhet",
-5,117,302,"Hotell","Større offentlig godkjent overnattingssted",
-5,118,99,"Pensjonat","Mindre offentlig godkjent overnattingssted",
-5,119,784,"Turisthytte","Overnattingssted utenfor tettbygd område",
-5,120,1732,"Skole","Offentlig og privat skole",
-5,121,88,"Sykehus","Offentlig og privat sykehus",
-5,122,342,"Helseinstitusjon","Aldershjem, rekreasjonshjem o.l.",
-5,123,1629,"Kirke","Kirke/kapell/arbeidskirke knyttet til Den norske kirke",
-5,125,653,"Forsamlingshus/kulturhus","Teater, kino, samfunnshus, grendehus o.l.",
-5,126,55,"Vaktstasjon/beredsskapsby gning","Bygning for politi/brann/los/toll/ambulanse/fly- og skipsovervåkning",
-5,127,67,"Militært bygg/anlegg","Militærleir, militært bygg",
-5,128,80,"Idrettshall","Alle typer innendørsanlegg, f.eks. ishall, svømmehall, idrettshall",
-5,129,98,"Fyr (fyrstasjon)","Offisielt fyr og fyrstasjon langs kysten",
-5,130,2333,"Lykt (fyrlykt)","Offisiell og privat lykt/fyrlykt langs kysten og i innlandet",
-5,131,29,"TV-/radiomast","TV-/radiotårn. Alle typer bakkebasert telekommunikasjon",
-5,132,395,"Bydel","Kulturmessig del av by, f.eks. Gamlebyen, Posebyen, Nordnes, Lade, Tromsdalen. (Se også Adm. Bydel 269.)",
+5,115,271,"Annen industri- og  lagerbygning","Mindre industri-, produksjon- og lagervirksomhet","building=industrial"
+5,116,198,"Forretningsbygg","Hus for kontor- og servicevirksomhet","building=commercial"
+5,117,302,"Hotell","Større offentlig godkjent overnattingssted","building=hotel;tourism=hotel"
+5,118,99,"Pensjonat","Mindre offentlig godkjent overnattingssted","building=hotel;tourism=guest_house"
+5,119,784,"Turisthytte","Overnattingssted utenfor tettbygd område","tourism=alpine_hut"
+5,120,1732,"Skole","Offentlig og privat skole","amenity=school"
+5,121,88,"Sykehus","Offentlig og privat sykehus","amenity=hospital"
+5,122,342,"Helseinstitusjon","Aldershjem, rekreasjonshjem o.l.","amenity=nursing_home"
+5,123,1629,"Kirke","Kirke/kapell/arbeidskirke knyttet til Den norske kirke","amenity=place_of_worship;building=church"
+5,125,653,"Forsamlingshus/kulturhus","Teater, kino, samfunnshus, grendehus o.l.","amenity=community_centre"
+5,126,55,"Vaktstasjon/beredsskapsby gning","Bygning for politi/brann/los/toll/ambulanse/fly- og skipsovervåkning","building=civic"
+5,127,67,"Militært bygg/anlegg","Militærleir, militært bygg","building=military;landuse=military"
+5,128,80,"Idrettshall","Alle typer innendørsanlegg, f.eks. ishall, svømmehall, idrettshall","amenity=sports_centre"
+5,129,98,"Fyr (fyrstasjon)","Offisielt fyr og fyrstasjon langs kysten","man_made=lighthouse"
+5,130,2333,"Lykt (fyrlykt)","Offisiell og privat lykt/fyrlykt langs kysten og i innlandet","man_made=lighthouse"
+5,131,29,"TV-/radiomast","TV-/radiotårn. Alle typer bakkebasert telekommunikasjon","man_made=communications_tower"
+5,132,395,"Bydel","Kulturmessig del av by, f.eks. Gamlebyen, Posebyen, Nordnes, Lade, Tromsdalen. (Se også Adm. Bydel 269.)","place=suburb"
 6,140,24621,"Adressenavn (veg/gate)","Offisielt adressenavn (veg-/gatenavn), jf. § 2 bokstav e i   matrikkelforskriften. Bruk ellers kode 240 Vegstrekning.",
-6,142,729,"Traktorveg","Driftsveg for kjøretøy som ikke kan kjøres med vanlig bil",
-6,143,4064,"Sti","Stistrekning, råk, slepe (gammel drifteveg), reindriftsveg",
+6,142,729,"Traktorveg","Driftsveg for kjøretøy som ikke kan kjøres med vanlig bil","highway=track"
+6,143,4064,"Sti","Stistrekning, råk, slepe (gammel drifteveg), reindriftsveg","highway=path"
 6,144,90,"Farled/skipslei","Normal seilingslei for skip, f.eks. Trondheimsleia",
 6,145,1,"Ferjestrekning","Ferjesamband som inngår i områdets samferdselsnett",
 6,146,10197,"Bru","Både for veg og jernbane. Angi ett punkt i hver ende for store bruer og ett midt på for små bruer.","bridge=yes"
-6,147,118,"Klopp","Liten gangbru av stokker og/eller stein over bekker og elver, i myr eller i fjæra",
-6,148,1216,"Tunnel","Vanlig tunnel, rasoverbygg og undergang på gangveg, veg og jernbane.",
+6,147,118,"Klopp","Liten gangbru av stokker og/eller stein over bekker og elver, i myr eller i fjæra","bridge=yes"
+6,148,1216,"Tunnel","Vanlig tunnel, rasoverbygg og undergang på gangveg, veg og jernbane.","tunnel=yes"
 6,149,673,"Vegkryss (veg/gate)","Angi ett punkt i hver ende for lange og ett punkt midt på for korte tunneler.",
 6,150,11,"Vegbom","For alle typer veger",
-6,151,44,"Bomstasjon","Mindre bom/-automat på privat veg",
-6,152,70,"Grind","Større bomanlegg på offentlig veg",
+6,151,44,"Bomstasjon","Mindre bom/-automat på privat veg","barrier=lift_gate"
+6,152,70,"Grind","Større bomanlegg på offentlig veg","barrier=toll_booth"
 6,153,18,"Parkeringsplass","Port i gjerde",
-6,154,341,"Kai","Offentlig og privat",
-6,155,407,"Brygge","Større, fastbygd bryggeanlegg",
-6,156,160,"Ferjekai","Mindre, fastbygd bryggeanlegg",
+6,154,341,"Kai","Offentlig og privat","man_made=pier"
+6,155,407,"Brygge","Større, fastbygd bryggeanlegg","man_made=pier"
+6,156,160,"Ferjekai","Mindre, fastbygd bryggeanlegg","amenity=ferry_terminal"
 6,157,5,"Utstikker","Punktet/koordinaten legges på ferjelemmen på kaia",
-6,158,12,"Sluse","Fast byggverk, utstikkende voll i sjøen",
-6,159,64,"Kanal","Kunstig løfteanretning for båter i vassdrag",
+6,158,12,"Sluse","Fast byggverk, utstikkende voll i sjøen","waterway=lock_gate"
+6,159,64,"Kanal","Kunstig løfteanretning for båter i vassdrag","waterway=canal"
 6,160,35,"Ankringsplass","Utgravd vannveg i sjø og ferskvann F.eks. opplagsplass for store båter/skip",
-6,161,506,"Stasjon","Betjent stoppested for jernbane og trikk",
-6,162,215,"Holdeplass","Ubetjent stoppested for jernbane og trikk",
-6,163,185,"Busstopp","Stoppested for rutegående vegtrafikk",
-6,164,120,"Flyplass","Landingsplass for rutegående flytrafikk og regulert privat flygning",
-6,165,22,"Landingsstripe","Landingsplass for privat flygning",
-5,170,2651,"Eiendom","Eiendomsnavn (Skal IKKE brukes ved senere registreringer)",
-7,180,3,"Nasjon","Selvstendig stat (offisielt navn)",
-7,181,23,"Fylke","Offisielt navn",
+6,161,506,"Stasjon","Betjent stoppested for jernbane og trikk","railway=station"
+6,162,215,"Holdeplass","Ubetjent stoppested for jernbane og trikk","railway=halt"
+6,163,185,"Busstopp","Stoppested for rutegående vegtrafikk","highway=bus_stop"
+6,164,120,"Flyplass","Landingsplass for rutegående flytrafikk og regulert privat flygning","aeroway=aerodrome"
+6,165,22,"Landingsstripe","Landingsplass for privat flygning","aeroway=runway"
+5,170,2651,"Eiendom","Eiendomsnavn (Skal IKKE brukes ved senere registreringer)","place=locality"
+7,180,3,"Nasjon","Selvstendig stat (offisielt navn)","place=country"
+7,181,23,"Fylke","Offisielt navn","place=county"
 7,182,463,"Kommune","Offisielt navn",
 7,183,12,"Sogn","Kirkesogn i Den norske kirke",
 7,184,4,"Grunnkrets","Se også 253 Annen adm. inndeling",
-7,185,233,"Allmenning","Område hvor rettighetene er regulert og fordelt på flere. Alle typer. Angi type i merknadsfeltet.",
-7,186,3,"Skytefelt","Militært skytefelt",
-7,187,302,"Verneområde","Alle typer på sjø og land. Angi type, f.eks. nasjonalpark, i merknadsfeltet",
+7,185,233,"Allmenning","Område hvor rettighetene er regulert og fordelt på flere. Alle typer. Angi type i merknadsfeltet.","area=yes"
+7,186,3,"Skytefelt","Militært skytefelt","military=range"
+7,187,302,"Verneområde","Alle typer på sjø og land. Angi type, f.eks. nasjonalpark, i merknadsfeltet","boundary=protected_area"
 7,188,5,"Soneinndeling til havs","Fiskerisone, havrettssone o.l. Angi type i merknadsfeltet.",
-8,190,513,"Idrettsanlegg","Alle typer utendørsanlegg. Skriv type i merknadsfeltet, f.eks. Ridebane, fotballbane.",
-5,191,152,"Campingplass","Alle typer, med/uten campinghytter, campingvogner og telt",
-8,192,24,"Skiheis","Skitrekk og stolheis i skianlegg",
-8,193,4,"Fjellheis","Gondolbane for frakt av folk til fjells",
+8,190,513,"Idrettsanlegg","Alle typer utendørsanlegg. Skriv type i merknadsfeltet, f.eks. Ridebane, fotballbane.","leisure=pitch"
+5,191,152,"Campingplass","Alle typer, med/uten campinghytter, campingvogner og telt","tourism=camp_site"
+8,192,24,"Skiheis","Skitrekk og stolheis i skianlegg","aerialway=drag_lift"
+8,193,4,"Fjellheis","Gondolbane for frakt av folk til fjells","aerialway=gondola"
 8,194,45,"Slalåm- og utforbakke","Alle typer regulerte alpinanlegg",
 8,195,65,"Småbåthavn","Regulert havneanlegg for småbåter",
 8,196,5,"Rørledning","Alle typer rørledninger, til olje, gass, vann, o.l.",
