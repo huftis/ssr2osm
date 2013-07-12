@@ -136,22 +136,21 @@ head(res)
 # ev. eitt av dei andre namna. (Ja, litt uelegant kode,
 # men fungerer kjapt og greitt.)
 
-# Namn på name- og alt_name-kolonnar
+# Namn og kolonnenummer på name-kolonnar
 namevar=unique(c("name.no", grep("name\\.", names(res), value=TRUE)))
-altnamevar=unique(c("alt_name.no", grep("alt_name\\.", names(res), value=TRUE)))
+namekol=match(namevar, names(res))
 
 # Indeks til (første) kolonne som har namn (der norsk har førsteprioritet)
-name.ind=apply(res[,namevar, drop=FALSE], 1, function(x) which.min(is.na(x)))       
-altname.ind=apply(res[,altnamevar, drop=FALSE], 1, function(x) which.min(is.na(x)))
+name.ind=min(namekol)-1+apply(res[,namekol, drop=FALSE], 1, function(x) which.min(is.na(x)))       
+altname.ind=name.ind+1 # Bruk alltid «alt_name»-namnet som finst for språket som er brukt
+                       # i «name» (sjå ssr_objid 320315 for eit eksempel på korfor)
 
 # Legg til name- og alt_name-kolonnar
-res$name=res[,namevar, drop=FALSE][cbind(1:nrow(res),name.ind)]
-res$alt_name=res[,altnamevar, drop=FALSE][cbind(1:nrow(res),altname.ind)]
-
+res$name=res[cbind(1:nrow(res),name.ind)]
+res$alt_name=res[cbind(1:nrow(res),altname.ind)]
 
 # Fjern kolonnar me ikkje (lenger) treng
 res=res[,!(names(res) %in% c("enh_ssrobj_id", "osm", "name.no", "alt_name.no"))]
-
 
 # Lag klar rette kolonnenamn
 kolnamn=gsub("no_kartverket_ssr", "no-kartverket-ssr", names(res))
