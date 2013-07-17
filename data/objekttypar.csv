@@ -6,7 +6,7 @@
 1,5,9146,"Høyde","Mindre terrengform som ikke vurderes som fjell",
 1,6,57885,"Ås","Langstrakt høydedrag","natural=ridge"
 1,7,6752,"Rygg","Langstrakt terrengform","natural=ridge"
-1,8,48481,"Haug","Liten, markant terrengform",
+1,8,48481,"Haug","Liten, markant terrengform","natural=peak"
 1,9,11974,"Bakke","Skråning","natural=slope;place=locality"
 1,10,32819,"Li","Skrånende terreng","natural=slope;place=locality"
 1,11,2726,"Stup","Loddrett eller svært bratt, fallende terreng","natural=cliff"
@@ -56,7 +56,7 @@
 3,65,646,"Øyr","Sand-/grusområde i elvemunning, elvedelta både mot innsjø/vann og saltvann",
 3,66,121,"Sand","Sand-/grusområde over vannkontur/kystkontur; morenemateriale",
 3,67,2408,"Eng","Kultivert slåtte-/gressmark","landuse=meadow"
-3,68,4914,"Jorde","Kultivert dyrkamark","landuse=farm"
+3,68,4914,"Jorde","Kultivert dyrkamark","landuse=farmland"
 3,69,314,"Havnehage","Inngjerdet beitemark","landuse=pasture"
 3,70,19,"Torvtak","Sted for uttak av myrtorv/brenntorv/veksttorv","landuse=peat_cutting"
 3,71,3166,"Setervoll","Ryddet, gressbevokst område på seter uten hus",
@@ -89,7 +89,7 @@
 5,105,2027,"Boligfelt","Regulert boligområde","place=neighbourhood"
 5,106,19,"Borettslag","Bofellesskap, vanligvis blokkbebyggelse","place=neighbourhood"
 5,107,372,"Industriområde","Større, sammenhengende område til industri- og næringsformål","landuse=industrial"
-5,108,117578,"Bruk","Bruksnavn, vanligvis (større) landbrukseiendom (jf. § 8 i lov om stadnamn,  og § 54 i matrikkelforskriften). Navn på én eiendom med ett bruksnummer under ett gardsnummer. Objektkoordinaten ligger normalt på våningshuset (hvis dette finnes).","place=hamlet"
+5,108,117578,"Bruk","Bruksnavn, vanligvis (større) landbrukseiendom (jf. § 8 i lov om stadnamn,  og § 54 i matrikkelforskriften). Navn på én eiendom med ett bruksnummer under ett gardsnummer. Objektkoordinaten ligger normalt på våningshuset (hvis dette finnes).",
 5,109,11736,"Enebolig/mindre boligbygg","Navn på mindre eiendom for fast bosetting. Hovedsaklig eiendom hvor eier  kan bestemme skrivemåten (jf. § 8 i lov om stadnamn og § 54 i matrikkelforskriften). Kan også omfatte eget navn på bygg, eller våningshus/gardsbruk som ikke er eiendom. Gitt eget matrikkelnummer på større","building=house"
 5,110,13094,"Fritidsbolig (hytte,  sommerhus)","Hus som ikke er ment for fast bosetting","building=cabin"
 5,111,18129,"Seter (sel, støl)","Enklere landbruksbebyggelse. Kan ha periodisk fast bosetting, vanligvis sommerstid","historic=summer_mountain_farm"
@@ -110,7 +110,7 @@
 5,127,67,"Militært bygg/anlegg","Militærleir, militært bygg","building=military;landuse=military"
 5,128,80,"Idrettshall","Alle typer innendørsanlegg, f.eks. ishall, svømmehall, idrettshall","amenity=sports_centre"
 5,129,98,"Fyr (fyrstasjon)","Offisielt fyr og fyrstasjon langs kysten","man_made=lighthouse"
-5,130,2333,"Lykt (fyrlykt)","Offisiell og privat lykt/fyrlykt langs kysten og i innlandet","man_made=lighthouse"
+5,130,2333,"Lykt (fyrlykt)","Offisiell og privat lykt/fyrlykt langs kysten og i innlandet","man_made=beacon"
 5,131,29,"TV-/radiomast","TV-/radiotårn. Alle typer bakkebasert telekommunikasjon","man_made=communications_tower"
 5,132,395,"Bydel","Kulturmessig del av by, f.eks. Gamlebyen, Posebyen, Nordnes, Lade, Tromsdalen. (Se også Adm. Bydel 269.)","place=suburb"
 6,140,24621,"Adressenavn (veg/gate)","Offisielt adressenavn (veg-/gatenavn), jf. § 2 bokstav e i   matrikkelforskriften. Bruk ellers kode 240 Vegstrekning.",
@@ -152,55 +152,55 @@
 5,191,152,"Campingplass","Alle typer, med/uten campinghytter, campingvogner og telt","tourism=camp_site"
 8,192,24,"Skiheis","Skitrekk og stolheis i skianlegg","aerialway=drag_lift"
 8,193,4,"Fjellheis","Gondolbane for frakt av folk til fjells","aerialway=gondola"
-8,194,45,"Slalåm- og utforbakke","Alle typer regulerte alpinanlegg",
-8,195,65,"Småbåthavn","Regulert havneanlegg for småbåter",
-8,196,5,"Rørledning","Alle typer rørledninger, til olje, gass, vann, o.l.",
-8,197,3,"Oljeinstallasjon (sjø)","Stasjonære oljeinstallasjoner (faste og flytende)",
+8,194,45,"Slalåm- og utforbakke","Alle typer regulerte alpinanlegg","route=piste"
+8,195,65,"Småbåthavn","Regulert havneanlegg for småbåter","leisure=marina"
+8,196,5,"Rørledning","Alle typer rørledninger, til olje, gass, vann, o.l.","man_made=pipeline"
+8,197,3,"Oljeinstallasjon (sjø)","Stasjonære oljeinstallasjoner (faste og flytende)","man_made=pumping_rig"
 8,198,17,"Kraftledning","Store strømoverføringsledninger",
 8,199,1,"Kraftgate (rørgate)","Store tilførselsrør for kraftanlegg",
 8,200,1,"Kabel","Alle typer kabler i sjø og ferskvann",
-8,201,884,"Dam","Både store reguleringsdammer og små fløtningsdammer",
+8,201,884,"Dam","Både store reguleringsdammer og små fløtningsdammer","waterway=dam"
 8,202,14,"Tømmerrenne","Kunstig tømmeranlegg",
 8,204,15,"Fløtningsanlegg","Kunstig fløtningsanlegg",
-8,205,4,"Fiskeoppdrettsanlegg","På land, i sjø og i ferskvann",
-8,206,6992,"Gammel bosettingsplass","Nedlagt bruk, seter, boplass, gamme. Merk! Husa er borte eller kun ruin",
-8,207,21,"Offersted","Samisk, norsk eller kvensk offersted",
-8,208,193,"Severdighet","Skriv forklaring i merknadsfeltet, f.eks. ’minnesmerke’",
-8,209,97,"Utsiktspunkt","Både i tårn og på bakken, f.eks. Kongens utsikt",
-8,210,72,"Skytebane","Pistol-/geværbane o.l.",
-1,211,1648,"Topp (fjelltopp/tind)","Øverste fjelltopp",
+8,205,4,"Fiskeoppdrettsanlegg","På land, i sjø og i ferskvann","landuse=aquaculture;aquaculture=fish"
+8,206,6992,"Gammel bosettingsplass","Nedlagt bruk, seter, boplass, gamme. Merk! Husa er borte eller kun ruin","place=locality"
+8,207,21,"Offersted","Samisk, norsk eller kvensk offersted","historic=wayside_shrine"
+8,208,193,"Severdighet","Skriv forklaring i merknadsfeltet, f.eks. ’minnesmerke’","tourism=attraction"
+8,209,97,"Utsiktspunkt","Både i tårn og på bakken, f.eks. Kongens utsikt","tourism=viewpoint"
+8,210,72,"Skytebane","Pistol-/geværbane o.l.","sport=shooting"
+1,211,1648,"Topp (fjelltopp/tind)","Øverste fjelltopp","natural=peak"
 1,212,2244,"Hylle (hjell)","Flatt område i fjellside",
 1,213,6057,"Terrengdetalj","Alle typer små naturdetaljer, f.eks. sprekker, hulveier, sand-/stein- /grusflater. Skriv forklaring i merknadsfeltet.",
-2,214,73,"Øygruppe","To eller flere øyer i ferskvann",
-4,215,1405,"Våg i sjø","Fjordarm, større vik",
-4,216,351,"Øygruppe i sjø","To eller flere øyer. Eks. Hvaler, Lofoten",
-4,217,54,"Klakk i sjø","Spiss grunne",
-5,218,273,"Bergverk  (underjord./dagbrudd)","Gruve, skjerp",
-6,219,45,"Jernbanestrekning","Lang jernbanestrekning. Eks. Ofotbanen, Bergensbanen",
-6,220,788,"Vad","Grunt (vade)sted i elv, bekk, vann eller sjø",
-6,221,188,"Havn","Sted der fartøy laster, losser eller søker ly for vær og sjø",
-8,222,45,"Badeplass","Offentlig og privat badeplass",
-8,223,12,"Fornøyelsespark","Bare store, regulerte anlegg",
-8,224,264,"Melkeplass","Seterplass uten hus, vanligvis i bratte lier på Vestlandet",
-8,225,3733,"Annen kulturdetalj","Alle typer kulturdetaljer, f.eks. lekeplass, utkikkstårn, fiskeplass, o.l. Skriv  hva det er i merknadsfeltet.",
-3,226,127,"Grustak/steinbrudd","Uttaksplass/-område for sand, grus, pukk, skifer eller stein (Se også Bergverk 218)",
+2,214,73,"Øygruppe","To eller flere øyer i ferskvann","place=island"
+4,215,1405,"Våg i sjø","Fjordarm, større vik","natural=bay"
+4,216,351,"Øygruppe i sjø","To eller flere øyer. Eks. Hvaler, Lofoten","place=island"
+4,217,54,"Klakk i sjø","Spiss grunne","natural=shoal"
+5,218,273,"Bergverk  (underjord./dagbrudd)","Gruve, skjerp","landuse=quarry"
+6,219,45,"Jernbanestrekning","Lang jernbanestrekning. Eks. Ofotbanen, Bergensbanen","route=railway"
+6,220,788,"Vad","Grunt (vade)sted i elv, bekk, vann eller sjø","highway=ford"
+6,221,188,"Havn","Sted der fartøy laster, losser eller søker ly for vær og sjø","landuse=harbour"
+8,222,45,"Badeplass","Offentlig og privat badeplass","sport=swimming"
+8,223,12,"Fornøyelsespark","Bare store, regulerte anlegg","tourism=theme_park"
+8,224,264,"Melkeplass","Seterplass uten hus, vanligvis i bratte lier på Vestlandet","place=locality"
+8,225,3733,"Annen kulturdetalj","Alle typer kulturdetaljer, f.eks. lekeplass, utkikkstårn, fiskeplass, o.l. Skriv  hva det er i merknadsfeltet.","place=locality"
+3,226,127,"Grustak/steinbrudd","Uttaksplass/-område for sand, grus, pukk, skifer eller stein (Se også Bergverk 218)","place=quarry"
 3,227,261,"Tømmervelte","Midlertidig lagringsplass for tømmer",
-5,228,536,"Hyttefelt","Offentlig/privat hyttefelt eller relativt tettbygd hytteområde.",
-5,229,251,"Barnehage","Offentlig og privat barnehage",
+5,228,536,"Hyttefelt","Offentlig/privat hyttefelt eller relativt tettbygd hytteområde.","place=neighbourhood"
+5,229,251,"Barnehage","Offentlig og privat barnehage","amenity=kindergarten"
 5,230,26,"Poststed","Offisielt poststed /postnummerområde",
 5,231,47,"NA","NA",
-6,232,112,"Plass/torg","I tettsted eller by",
-8,233,80,"Gjerde","Steingjerde, tregjerde o.l.",
-8,234,400,"Stø","Båtstø, båtplass (uten naust) i vannkanten",
-8,235,127,"Gravplass","Alle typer gravlunder, gravplasser",
-6,236,36,"Molo","Flytende bryggeanlegg",
-5,237,65,"Rådhus (kommune, fylke, stat)","Administrasjonssenteret (-huset) i den administrative enheten",
+6,232,112,"Plass/torg","I tettsted eller by","amenity=marketplace"
+8,233,80,"Gjerde","Steingjerde, tregjerde o.l.","barrier=fence"
+8,234,400,"Stø","Båtstø, båtplass (uten naust) i vannkanten","mooring=yes"
+8,235,127,"Gravplass","Alle typer gravlunder, gravplasser","amenity=graveyard"
+6,236,36,"Molo","Flytende bryggeanlegg","man_made=pier"
+5,237,65,"Rådhus (kommune, fylke, stat)","Administrasjonssenteret (-huset) i den administrative enheten","amenity=townhall"
 2,238,131,"NA","NA",
 1,239,1437,"Fjellside","Åpent, skrånende terreng i fjellet",
 6,240,792,"Vegstrekning","Fjellovergang, turiststrekning, uoffisielt vegnavn. Eks. Kvænangsfjellet, Gamle Bynesveg, Friisvegen",
 4,241,6,"Fjordmunning","Område ytterst i en fjord",
 2,242,654,"Nes ved elver","Landet mellom to møtende elver. Brukt (helst) i samiske områder. Stedsnavnets skrivemåte skal IKKE avgjøre om navnet skal gis denne koden, men KUN lokalitetens størrelse og/eller fasong.",
-2,243,126,"Kilde","Oppkomme, olle, ile. Benyttes for å angi stedet hvor vannkilden/grunnvannet kommer i dagen.",
+2,243,126,"Kilde","Oppkomme, olle, ile. Benyttes for å angi stedet hvor vannkilden/grunnvannet kommer i dagen.","natural=spring"
 1,244,340,"Senkning","Flat forsenkning, dalsenkning",
 1,245,1076,"Fjellkant (aksel)","Skulder, nese, bryn",
 1,246,44,"Skogområde","Stort skogområde. Eks. Nordmarka, Bymarka, Finnskogen",
