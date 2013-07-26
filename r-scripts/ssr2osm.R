@@ -3,6 +3,12 @@
 #
 # Laga av Karl Ove Hufthammer <karl@huftis.org>.
 
+# Variabler for input og output
+ssr_geojson="20_finnmark_stedsnavn.geojson"
+out_kommune=2003
+osm_csv="~/test.csv"
+
+
 # Nødvendige pakkar
 library(rjson)   # Lesing av JSON-data
 library(plyr)    # Enkel datamassering
@@ -13,7 +19,7 @@ options(stringsAsFactors=FALSE)
 
 # Les inn data
 # Last først ned filene frå http://data.kartverket.no/stedsnavn/GeoJSON/Fylker/
-d=fromJSON(file="20_finnmark_stedsnavn.geojson")[[2]]
+d=fromJSON(file=ssr_geojson)[[2]]
 length(d) # Kor mange oppføringar
 
 # Gjer om dataa til ei dataramme (litt komplisert, men går ganske kjapt)
@@ -116,7 +122,7 @@ lagosm=function(d) {
 
 
 # Hent ut ein (eksempel)kommune
-komm=subset(d3, enh_komm==2003)
+komm=subset(d3, enh_komm==out_kommune)
 
 # Lag OSM-data for alle namneobjekta i den aktuelle kommunen
 res=ddply(komm, .(enh_ssrobj_id), lagosm, .progress="text")
@@ -157,5 +163,5 @@ kolnamn=gsub("no_kartverket_ssr", "no-kartverket-ssr", names(res))
 kolnamn=gsub("\\.", ":", kolnamn)
 
 # Lagra i CSV-format, for enkel bruk i JOSM og andre program
-write.table(res, file="~/test.csv", col.names=kolnamn,
+write.table(res, file=osm_csv, col.names=kolnamn,
             sep=",", dec=".", na="", row.names=FALSE)
