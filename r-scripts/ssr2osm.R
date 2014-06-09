@@ -4,7 +4,7 @@
 # Laga av Karl Ove Hufthammer <karl@huftis.org>.
 
 # Variabler for input og output
-ssr_geojson="20_finnmark_stedsnavn.geojson"
+ssr_geojson="../data/stedsnavn.geojson"
 out_kommune=2003
 osm_csv="~/test.csv"
 
@@ -18,21 +18,23 @@ library(stringr) # Avansert strenghandtering
 options(stringsAsFactors=FALSE)
 
 # Les inn data
-# Last først ned filene frå http://data.kartverket.no/stedsnavn/GeoJSON/Fylker/
+# Last først ned filene frå http://data.kartverket.no/download/content/stedsnavn-ssr-wgs84-geojson
 d=fromJSON(file=ssr_geojson)[[2]]
 length(d) # Kor mange oppføringar
+
 
 # Gjer om dataa til ei dataramme (litt komplisert, men går ganske kjapt)
 d2=lapply(d, unlist)
 d3=do.call(rbind, d2)
 d3=as.data.frame(d3)
+rm(d, d2); gc() # Rydd opp, for å frigjera litt minne
 
 # Fjern forledd i kolonnenamn
 names(d3)=gsub(".*\\.","", names(d3))
 
 # Sjå berre på gyldige skrivemåtar (vedtatt, godkjent, samlevedtak eller privat),
 # jf. http://www.statkart.no/kart/stedsnavn/sentralt-stadnamnregister-ssr/saksbehandlingsstatus-for-skrivematen/
-d3=subset(d3, skr_snskrstat %in% c("V","G","S","P"))        
+d3=subset(d3, skr_snskrstat %in% c("V","G","S","P"))
 
 # Sjå kjapt på dataa
 head(d3)
@@ -48,7 +50,7 @@ d3=d3[aktvar]
 d3=colwise(type.convert, na.strings="", as.is=TRUE)(d3)
 
 # Fjern veg- og gatenamn (Kartverket styrer ikkje namna her)
-d3=subset(d3, enh_navntype!=140 )
+d3=subset(d3, enh_navntype!=140)
 
 # Reformater datoar til ISO 8601-format
 # (stolar på Kartverket, sjølv om nokre datoar er langt inni framtida …)
