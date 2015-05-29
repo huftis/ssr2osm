@@ -234,7 +234,7 @@
 8,276,1,"Båke (seilingsmerke)","Offisiell og privat båke langs kysten og i innlandet, fast",""
 8,277,1,"Overett (seilingsmerker)","Offisiell og privat. To stenger med eller uten lys overett, langs kysten og i  innlandet, faste",""
 6,278,1,"Rasteplass","Rasteplass definert og lagt til rette av Statens vegvesen eller annen offentlig myndighet",""
-5,280,3119,"Gard","Gardsnavn; felles navn for et helt gardsnummer (jf. § 8 i lov om stadnamn),  og som ett eller flere bruksnummer er knyttet til. Punktet/koordinaten ligger normalt i tunet på et sentralt plassert bruk. Hvis to eller flere garder har forskjellige objekt for hvert gardsnummer. (Se også navnetype 108 Bruk.) gardsnummer, men samme navn, registreres det ett geografisk","natural=village"
+5,280,3119,"Gard","Gardsnavn; felles navn for et helt gardsnummer (jf. § 8 i lov om stadnamn),  og som ett eller flere bruksnummer er knyttet til. Punktet/koordinaten ligger normalt i tunet på et sentralt plassert bruk. Hvis to eller flere garder har forskjellige objekt for hvert gardsnummer. (Se også navnetype 108 Bruk.) gardsnummer, men samme navn, registreres det ett geografisk","place=village"
 4,282,21,"Gass/Oljefelt i sjø","Gassfelt og oljefelt i havet",""
 4,298,2,"Sjødetalj","Alle typer. Skriv forklaring i merknadsfeltet.",""
 8,299,1,"Geologisk struktur","Geologisk formasjon under jordoverflaten, på land og i havet",""
