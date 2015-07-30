@@ -5,7 +5,6 @@
 
 # Variabler for input og output
 ssr_geojson="../data/stedsnavn.geojson"
-out_kommune=2003
 osm_csv="~/test.csv"
 
 
@@ -91,7 +90,7 @@ d3=data.frame(d3, tagginfo.df)
 
 # Sorter etter ID, dato (nyaste vedtak først) og språk
 # (seinare programkode antar sorterte data)
-# (må komma etter merge-kommandoen)
+# (må komma etter join()-kommandoen)
 d3=arrange(d3, enh_ssrobj_id, desc(skr_sndato), enh_snspraak, enh_ssr_id)
 
 # Sjå kjapt på dataa igjen
@@ -117,47 +116,63 @@ lagosm=function(d) {
 }
 
 
-# Hent ut ein (eksempel)kommune
-komm=subset(d3, enh_komm==out_kommune)
+# Funksjonar for å laga klar og lagra OSM-data for kvar kommune
 
-# Lag OSM-data for alle namneobjekta i den aktuelle kommunen
-res=ddply(komm, .(enh_ssrobj_id), lagosm, .progress="text")
+# Formater kommunenummer med fire siffer
+d3$enh_komm=formatC(d3$enh_komm, flag="0", width=4)
 
-# Rett opp språkkodar (Kartverket brukar ustandard kodar for dei samiske språka, ikkje ISO 639)
-names(res)=gsub("\\.SN", ".se", names(res))  # Nordsamisk
-names(res)=gsub("\\.SL", ".smj", names(res)) # Lulesamisk
-names(res)=gsub("\\.SS", ".sma", names(res)) # Sørsamisk
-names(res)=tolower(names(res))               # Språkkodar om til små bokstavar
+# Funksjon for å laga klar og lagra OSM-data for
+# eit gitt kommunedatasett (utdrag av d3)
+lagra_kommune=function(komm) {
+  # Lag OSM-data for alle namneobjekta i den aktuelle kommunen
+  res=ddply(komm, .(enh_ssrobj_id), lagosm, .progress="none")
+  
+  # Rett opp språkkodar (Kartverket brukar ustandard kodar for dei samiske språka, ikkje ISO 639)
+  names(res)=gsub("\\.SN", ".se", names(res))  # Nordsamisk
+  names(res)=gsub("\\.SL", ".smj", names(res)) # Lulesamisk
+  names(res)=gsub("\\.SS", ".sma", names(res)) # Sørsamisk
+  names(res)=tolower(names(res))               # Språkkodar om til små bokstavar
+  
+  ## Sjå på nokre av namna
+  #head(res)
+  
+  
+  # Ikkje alle plassar har norske namn. Bruk det norske
+  # namnet som «name»/«alt_name» dersom det finst,
+  # ev. eitt av dei andre namna. (Ja, litt uelegant kode,
+  # men fungerer kjapt og greitt.)
+  
+  # Namn og kolonnenummer på name-kolonnar
+  namevar=unique(c("name.no", grep("name\\.", names(res), value=TRUE)))
+  namekol=match(namevar, names(res))
+  
+  # Indeks til (første) kolonne som har namn (der norsk har førsteprioritet)
+  name.ind=min(namekol)-1+apply(res[,namekol, drop=FALSE], 1, function(x) which.min(is.na(x)))       
+  altname.ind=name.ind+1 # Bruk alltid «alt_name»-namnet som finst for språket som er brukt
+                         # i «name» (sjå ssr_objid 320315 for eit eksempel på korfor)
+  
+  # Legg til name- og alt_name-kolonnar
+  res$name=res[cbind(1:nrow(res),name.ind)]
+  res$alt_name=res[cbind(1:nrow(res),altname.ind)]
+  
+  # Fjern kolonnar me ikkje (lenger) treng
+  res=res[,!(names(res) %in% c("enh_ssrobj_id", "osm", "name.no", "alt_name.no"))]
 
-# Sjå på nokre av namna
-head(res)
+  # Ikkje ta med kartverkspesifikke metadata (kommenter ev. ut)
+  res=res[,!grepl("kartverket", names(res))]
+  
+  # Lag klar rette kolonnenamn
+  kolnamn=gsub("no_kartverket_ssr", "no-kartverket-ssr", names(res))
+  kolnamn=gsub("\\.", ":", kolnamn)
+  
+  # Lagra i CSV-format, for enkel bruk i JOSM og andre program
+  utmappe="utdata/"
+  if(!dir.exists(utmappe)) dir.create(utmappe)
+  utfil=paste0(utmappe, komm$enh_komm[1], ".csv")
+  write.table(res, file=utfil, col.names=kolnamn,
+              sep=",", dec=".", na="", row.names=FALSE)
+}
 
-
-# Ikkje alle plassar har norske namn. Bruk det norske
-# namnet som «name»/«alt_name» dersom det finst,
-# ev. eitt av dei andre namna. (Ja, litt uelegant kode,
-# men fungerer kjapt og greitt.)
-
-# Namn og kolonnenummer på name-kolonnar
-namevar=unique(c("name.no", grep("name\\.", names(res), value=TRUE)))
-namekol=match(namevar, names(res))
-
-# Indeks til (første) kolonne som har namn (der norsk har førsteprioritet)
-name.ind=min(namekol)-1+apply(res[,namekol, drop=FALSE], 1, function(x) which.min(is.na(x)))       
-altname.ind=name.ind+1 # Bruk alltid «alt_name»-namnet som finst for språket som er brukt
-                       # i «name» (sjå ssr_objid 320315 for eit eksempel på korfor)
-
-# Legg til name- og alt_name-kolonnar
-res$name=res[cbind(1:nrow(res),name.ind)]
-res$alt_name=res[cbind(1:nrow(res),altname.ind)]
-
-# Fjern kolonnar me ikkje (lenger) treng
-res=res[,!(names(res) %in% c("enh_ssrobj_id", "osm", "name.no", "alt_name.no"))]
-
-# Lag klar rette kolonnenamn
-kolnamn=gsub("no_kartverket_ssr", "no-kartverket-ssr", names(res))
-kolnamn=gsub("\\.", ":", kolnamn)
-
-# Lagra i CSV-format, for enkel bruk i JOSM og andre program
-write.table(res, file=osm_csv, col.names=kolnamn,
-            sep=",", dec=".", na="", row.names=FALSE)
+# For kvar kommune, lag klar data i OSM-format, og lagra
+# som CSV-fil, for bruk i (for eksempel) JOSM
+d_ply(d3, .(enh_komm), lagra_kommune, .progress="text")
