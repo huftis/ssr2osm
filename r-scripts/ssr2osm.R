@@ -10,31 +10,29 @@ osm_csv="~/test.csv"
 
 
 # Nødvendige pakkar
-library(rjson)   # Lesing av JSON-data
-library(plyr)    # Enkel datamassering
-library(stringr) # Avansert strenghandtering
+library(jsonlite) # Lesing av JSON-data
+library(plyr)     # Enkel datamassering
+library(stringr)  # Avansert strenghandtering
 
 # Ikkje gjer om tekst til faktorar automatisk
 options(stringsAsFactors=FALSE)
 
 # Les inn data
 # Last først ned filene frå http://data.kartverket.no/download/content/stedsnavn-ssr-wgs84-geojson
-d=fromJSON(file=ssr_geojson)[[2]]
+d=fromJSON(txt=ssr_geojson)$features
 length(d) # Kor mange oppføringar
 
-
-# Gjer om dataa til ei dataramme (litt komplisert, men går ganske kjapt)
-d2=lapply(d, unlist)
-d3=do.call(rbind, d2)
-d3=as.data.frame(d3)
-rm(d, d2); gc() # Rydd opp, for å frigjera litt minne
-
-# Fjern forledd i kolonnenamn
-names(d3)=gsub(".*\\.","", names(d3))
+# Legg koordinatar til resten av dataa
+d2=d$properties
+d2[c("coordinates1","coordinates2")]=ldply(d$geometry$coordinates)
 
 # Sjå berre på gyldige skrivemåtar (vedtatt, godkjent, samlevedtak eller privat),
 # jf. http://www.statkart.no/kart/stedsnavn/sentralt-stadnamnregister-ssr/saksbehandlingsstatus-for-skrivematen/
-d3=subset(d3, skr_snskrstat %in% c("V","G","S","P"))
+d3=subset(d2, skr_snskrstat %in% c("V","G","S","P"))
+
+# Fjern gamle objekt (for å spara litt minne)
+rm(d, d2)
+gc()
 
 # Sjå kjapt på dataa
 head(d3)
@@ -46,9 +44,6 @@ aktvar=c("enh_ssrobj_id", "skr_snskrstat", "enh_snavn", "enh_snspraak", "skr_snd
 # Sjå berre på aktuelle variablar
 d3=d3[aktvar]
 
-# Gjer om tal til tal o.l.
-d3=colwise(type.convert, na.strings="", as.is=TRUE)(d3)
-
 # Fjern veg- og gatenamn (Kartverket styrer ikkje namna her)
 d3=subset(d3, enh_navntype!=140)
 
@@ -56,13 +51,12 @@ d3=subset(d3, enh_navntype!=140)
 # (stolar på Kartverket, sjølv om nokre datoar er langt inni framtida …)
 d3$skr_sndato=as.Date(as.character(d3$skr_sndato), format="%Y%m%d")
 
-
 # Hent inn info om objekttypar
 objtypar=read.csv("../data/objekttypar.csv", sep=",", na.strings="")[c("enh_navntype","osm")]
 head(objtypar)
 
 # Legg objekttypeinfo til SSR-dataa
-d3=merge(d3, objtypar)
+d3=join(d3, objtypar, by="enh_navntype", type="left", match="first")
 
 # Sjå vidare berre på objekt som har OSM-taggar definert
 d3=subset(d3, !is.na(osm))
@@ -76,7 +70,7 @@ tagg.verdi=lapply(taggar, strsplit, split="=")
 
 # Oversikt over taggnamn brukte
 taggnamn=unique(gsub("([^=*])=.*", "\\1", d3$osm))
-taggnamn
+sort(taggnamn)
 
 # Gjer om til liste over namngjevne verdiar (namnet == taggen),
 # eitt element for kvar rad
